@@ -1,3 +1,6 @@
+use chrono::Local;
+use std::fs::read_to_string;
+
 struct User {
     first_name: String,
     last_name: String,
@@ -18,7 +21,54 @@ fn main() {
         age: 22,
     };
 
+    let my_direction = Direction::South;
+    let my_shape = Shape::Rectangle(10.0, 20.0);
     println!("{}", user.first_name);
+
+    let index = find_first_a(String::from("preet"));
+
+    match index {
+        Some(value) => println!("Index is {}", value),
+        None => println!("a not found"),
+    }
+    let result = read_to_string("a.txt");
+
+    match result {
+        Ok(data) => println!("{}", data),
+        Err(err) => println!("Error while reading the file"),
+    }
+
+    let time = Local::now();
+    println!("Current time is {}", time);
+}
+
+fn find_first_a(s: String) -> Option<i32> {
+    for (index, char) in s.chars().enumerate() {
+        if char == 'a' {
+            return Some(index as i32);
+        }
+    }
+    return None;
+}
+
+enum Direction {
+    North,
+    East,
+    South,
+    West,
+}
+
+enum Shape {
+    Rectangle(f64, f64),
+    Circle(f64),
+}
+
+fn calculate_area(shape: Shape) -> f64 {
+    let area = match shape {
+        Shape::Rectangle(a, b) => a * b,
+        Shape::Circle(r) => r * r,
+    };
+    return area;
 }
 
 fn is_even(num: i32) -> bool {
