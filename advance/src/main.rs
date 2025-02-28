@@ -1,7 +1,45 @@
 use std::{collections::HashMap, iter::Filter};
 
+trait Summary {
+    fn summarise(&self) -> String;
+}
+
+struct User {
+    name: String,
+    age: u32,
+}
+
+trait Fix {
+    fn fix(&self) -> String {
+        return String::from("hi there");
+    }
+}
+
+impl Summary for User {
+    fn summarise(&self) -> String {
+        return format!("The name is {}, and age is {}", self.name, self.age);
+    }
+}
+
 fn main() {
-    //Ve1utors
+    //traits
+    let user = User {
+        name: String::from("Yash"),
+        age: 21,
+    };
+    println!("{}", user.summarise());
+
+    fn notify<T: Summary + Fix>(u: T) {
+        println!("{}", u.summarise());
+    }
+
+    let name = String::from("Yash");
+    // let user2 = User {
+    //     name: &name,
+    //     age: 21,
+    // };
+
+    //Vectors
     let mut vec = Vec::new();
     vec.push(1);
     vec.push(2);
@@ -52,6 +90,15 @@ fn main() {
     for val in v1_iter2 {
         println!("{}", val);
     }
+    //
+    let ans;
+    let str1 = String::from("small");
+    {
+        let str2 = String::from("Longer");
+
+        ans = longest(&str1, &str2);
+    }
+    // println!("{}", ans);
 }
 
 //Vectors
@@ -73,4 +120,12 @@ fn group_values_by_key(vec: Vec<(String, i32)>) -> HashMap<String, i32> {
         hm.insert(key, value);
     }
     return hm;
+}
+
+fn longest<'a>(str1: &'a str, str2: &'a str) -> &'a str {
+    if str1.len() > str2.len() {
+        return str1;
+    } else {
+        return str2;
+    }
 }
